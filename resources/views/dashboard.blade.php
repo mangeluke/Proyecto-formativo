@@ -13,6 +13,7 @@
 
                     <!-- HEADER -->
                     <header class="header">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
                         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
                         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
                         <div class="logo-header">
@@ -25,8 +26,8 @@
                                 </button>
                                 <ul aria-label="main-header">
                                     <li><a href="{{ route('dashboard') }}" class="nav-links">Inicio</a></li>
-    <li><a href="{{ route('productos') }}" class="nav-links">Productos</a></li>
-    <li><a href="{{ route('contactos') }}" class="nav-links">Contáctame</a></li>
+                                        <li><a href="{{ route('productos') }}" class="nav-links">Productos</a></li>
+                                        <li><a href="{{ route('contactos') }}" class="nav-links">Contáctame</a></li>
                                     <li class="user-menu">
                                         <div class="user">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -39,6 +40,9 @@
                                             <button onclick="openModal(false)">Registrarse</button>
                                         </div>
                                     </li>
+                                    <!-- Modal de Inicio de Sesión -->
+
+                                    
                                 </ul>
                             </nav>
                         </div>
@@ -49,12 +53,15 @@
                         <div class="modal-content">
                             <button class="close-modal" onclick="closeModal()">×</button>
                             <h2 id="modalTitle">Iniciar Sesión</h2>
-                            <form id="authForm" method="POST" action="{{ route('auth.submit') }}">
+                            <!-- Contenedor para el mensaje de éxito -->
+                            <div id="successMessage" class="success-message" style="display: none; color: green; font-weight: bold;"></div>
+                            <form id="registerForm" method="POST" action="{{ route('cliente.store') }}">
                                 @csrf
-                                <div id="registerFields" style="display: none;">
+                                <div id="registerFields">
                                     <input type="text" name="nombre" placeholder="Nombre" required />
                                     <input type="tel" name="telefono" placeholder="Teléfono" />
                                     <input type="text" name="direccion" placeholder="Dirección" />
+                                    
                                 </div>
                                 <input type="email" name="email" placeholder="Correo" required />
                                 <input type="password" name="password" placeholder="Contraseña" required />
@@ -186,6 +193,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
+
+
+
+
         let isLogin = true;
 
         function toggleMenu() {
@@ -210,4 +221,44 @@
             openModal(isLogin);
         }
     </script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = data.message || '¡Registro exitoso!';
+            successMessage.style.display = 'block';
+            this.reset();
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+                closeModal();
+            }, 3000);
+        } else {
+            alert(data.message || 'Hubo un error en el registro.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error inesperado.');
+    });
+});
+    </script>
+    
 </x-app-layout>

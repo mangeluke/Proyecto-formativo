@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->integer('id_cliente', true);
-            $table->string('nombre', 100)->nullable();
-            $table->string('email', 100)->nullable()->unique('email');
-            $table->string('telefono', 20)->nullable();
-            $table->string('direccion')->nullable();
-            $table->timestamp('fecha_registro')->useCurrent();
+            $table->id(); // Campo autoincremental
+        $table->string('nombre', 100)->nullable()->default('NULL');
+        $table->string('email', 100)->nullable()->default('NULL')->unique();
+        $table->string('telefono', 20)->nullable()->default('NULL');
+        $table->string('direccion')->nullable()->default('NULL');
+        $table->string('password'); // Agregar este campo
+        $table->timestamp('fecha_registro')->useCurrent(); // Marca de tiempo automática
         });
     }
 
