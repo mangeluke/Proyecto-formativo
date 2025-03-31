@@ -37,5 +37,7 @@ Route::post('/auth/submit', [AuthController::class, 'submit'])->name('auth.submi
 
 
 
+
 Route::post('/registrar-cliente', [ClienteController::class, 'store'])->name('cliente.store');
+
 require __DIR__.'/auth.php';
