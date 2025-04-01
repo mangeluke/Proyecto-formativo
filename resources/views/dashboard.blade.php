@@ -15,11 +15,10 @@
                         <div class="logo-header">
                             <h1 class="logo-nov">Novedades del Mimbre</h1>
                         </div>
+                        
                         <div class="navegacion">
                             <nav>
-                                <button class="menu-toggle" onclick="toggleMenu()">
-                                    <i class="fas fa-bars"></i> Menú
-                                </button>
+                                
                                 <ul aria-label="main-header">
                                     <li><a href="{{ route('dashboard') }}" class="nav-links">Inicio</a></li>
                                         <li><a href="{{ route('productos') }}" class="nav-links">Productos</a></li>
@@ -44,6 +43,23 @@
                         </div>
                     </header>
 
+                    <div class="top-left-menu">
+                        
+                        <ul class="dropdown-menu-items nav flex-column" aria-label="main-header">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('productos') }}">Productos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('contactos') }}">Contáctame</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled" aria-disabled="true">Próximamente</a>
+                            </li>
+                        </ul>
+                    </div>
                     <!-- MODAL -->
                     <div id="modalOverlay" class="modal-overlay" style="display: none;">
                         <div class="modal-content">
@@ -104,8 +120,8 @@
                                         </div>
                                     @endfor
                                 </div>
-                                <div class="carousel-arrow left"><</div>
-                                <div class="carousel-arrow right">></div>
+                                <div class="carousel-arrow left"></div>
+                                <div class="carousel-arrow right"></div>
                                 <ul class="carousel-indicators">
                                     @for ($i = 0; $i < 3; $i++)
                                         <li data-target="{{ $i }}"></li>
@@ -190,6 +206,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
+        function toggleMenu() {
+            const menu = document.querySelector('.dropdown-menu-items');
+            menu.classList.toggle('active');
+        }
+    </script>
+
+    <script>
 
 
 
@@ -257,5 +280,6 @@
     });
 });
     </script>
+    
     
 </x-app-layout>

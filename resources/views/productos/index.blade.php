@@ -1,5 +1,8 @@
 <x-app-layout>
-    <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
         <header class="header">
             <link rel="stylesheet" href="{{ asset('css/productos.css') }}">
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -24,6 +27,23 @@
                 </ul>
             </div>
         </header>
+        <div class="top-left-menu">
+            
+            <ul class="dropdown-menu-items nav flex-column" aria-label="main-header">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('productos') }}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contactos') }}">Contáctame</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Próximamente</a>
+                </li>
+            </ul>
+        </div>
         <main>
             <section class="descripcion-productos">
                 <h2 class="titulo-descripcion">Descubre la Belleza del Mimbre</h2>
